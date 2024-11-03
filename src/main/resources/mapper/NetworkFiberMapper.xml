@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinamobile.demo.dao.NetworkFiberMapper">
+  <resultMap id="BaseResultMap" type="com.chinamobile.demo.entity.NetworkFiber">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="fiber_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="longitude" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="latitude" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="aoi_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fiber_name, address, longitude, latitude, aoi_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_network_fiber
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_network_fiber
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinamobile.demo.entity.NetworkFiber">
+    insert into t_network_fiber (id, fiber_name, address, 
+      longitude, latitude, aoi_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{fiberName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{aoiId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinamobile.demo.entity.NetworkFiber">
+    insert into t_network_fiber
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fiberName != null">
+        fiber_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="aoiId != null">
+        aoi_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fiberName != null">
+        #{fiberName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="aoiId != null">
+        #{aoiId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinamobile.demo.entity.NetworkFiber">
+    update t_network_fiber
+    <set>
+      <if test="fiberName != null">
+        fiber_name = #{fiberName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="aoiId != null">
+        aoi_id = #{aoiId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinamobile.demo.entity.NetworkFiber">
+    update t_network_fiber
+    set fiber_name = #{fiberName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      aoi_id = #{aoiId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectFiberListByPosition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_network_fiber
+    where (CAST(longitude AS DOUBLE) between #{swLng} and #{neLng}) and
+    (CAST(latitude AS DOUBLE) between #{swLat} and #{neLat})
+  </select>
+  <select id="selectFiberByPosition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_network_fiber
+    where CAST(longitude AS DOUBLE) = #{lng} and CAST(latitude AS DOUBLE) = #{lat}
+  </select>
+  <select id="selectFiberListByAOI" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_network_fiber
+    where aoi_id = #{aoiId}
+  </select>
+  <select id="selectFiberNumByAOI" resultType="java.lang.Integer">
+    select
+    count(*)
+    from t_network_fiber
+    where aoi_id = #{aoiId}
+  </select>
+</mapper>

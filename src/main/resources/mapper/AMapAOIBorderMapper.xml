@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinamobile.demo.dao.AMapAOIBorderMapper">
+  <resultMap id="BaseResultMap" type="com.chinamobile.demo.entity.AMapAOIBorder">
+    <constructor>
+      <idArg column="aoi_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="east_lng" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="west_lng" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="north_lat" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="south_lat" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinamobile.demo.entity.AMapAOIBorder">
+    <constructor>
+      <idArg column="aoi_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="east_lng" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="west_lng" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="north_lat" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="south_lat" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="polygon" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    aoi_id, east_lng, west_lng, north_lat, south_lat
+  </sql>
+  <sql id="Blob_Column_List">
+    polygon
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_map_aoi_border
+    where aoi_id = #{aoiId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_map_aoi_border
+    where aoi_id = #{aoiId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chinamobile.demo.entity.AMapAOIBorder">
+    insert into t_map_aoi_border (aoi_id, east_lng, west_lng, 
+      north_lat, south_lat, polygon
+      )
+    values (#{aoiId,jdbcType=VARCHAR}, #{eastLng,jdbcType=VARCHAR}, #{westLng,jdbcType=VARCHAR}, 
+      #{northLat,jdbcType=VARCHAR}, #{southLat,jdbcType=VARCHAR}, #{polygon,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinamobile.demo.entity.AMapAOIBorder">
+    insert into t_map_aoi_border
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aoiId != null">
+        aoi_id,
+      </if>
+      <if test="eastLng != null">
+        east_lng,
+      </if>
+      <if test="westLng != null">
+        west_lng,
+      </if>
+      <if test="northLat != null">
+        north_lat,
+      </if>
+      <if test="southLat != null">
+        south_lat,
+      </if>
+      <if test="polygon != null">
+        polygon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aoiId != null">
+        #{aoiId,jdbcType=VARCHAR},
+      </if>
+      <if test="eastLng != null">
+        #{eastLng,jdbcType=VARCHAR},
+      </if>
+      <if test="westLng != null">
+        #{westLng,jdbcType=VARCHAR},
+      </if>
+      <if test="northLat != null">
+        #{northLat,jdbcType=VARCHAR},
+      </if>
+      <if test="southLat != null">
+        #{southLat,jdbcType=VARCHAR},
+      </if>
+      <if test="polygon != null">
+        #{polygon,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinamobile.demo.entity.AMapAOIBorder">
+    update t_map_aoi_border
+    <set>
+      <if test="eastLng != null">
+        east_lng = #{eastLng,jdbcType=VARCHAR},
+      </if>
+      <if test="westLng != null">
+        west_lng = #{westLng,jdbcType=VARCHAR},
+      </if>
+      <if test="northLat != null">
+        north_lat = #{northLat,jdbcType=VARCHAR},
+      </if>
+      <if test="southLat != null">
+        south_lat = #{southLat,jdbcType=VARCHAR},
+      </if>
+      <if test="polygon != null">
+        polygon = #{polygon,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where aoi_id = #{aoiId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinamobile.demo.entity.AMapAOIBorder">
+    update t_map_aoi_border
+    set east_lng = #{eastLng,jdbcType=VARCHAR},
+      west_lng = #{westLng,jdbcType=VARCHAR},
+      north_lat = #{northLat,jdbcType=VARCHAR},
+      south_lat = #{southLat,jdbcType=VARCHAR},
+      polygon = #{polygon,jdbcType=LONGVARCHAR}
+    where aoi_id = #{aoiId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinamobile.demo.entity.AMapAOIBorder">
+    update t_map_aoi_border
+    set east_lng = #{eastLng,jdbcType=VARCHAR},
+      west_lng = #{westLng,jdbcType=VARCHAR},
+      north_lat = #{northLat,jdbcType=VARCHAR},
+      south_lat = #{southLat,jdbcType=VARCHAR}
+    where aoi_id = #{aoiId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBorderListByPosition" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_map_aoi_border
+    where CAST(east_lng AS DOUBLE) &lt;= #{neLng} and
+    CAST(west_lng AS DOUBLE) >= #{swLng} and
+    CAST(north_lat AS DOUBLE) &lt;= #{neLat} and
+    CAST(south_lat AS DOUBLE) >= #{swLat}
+  </select>
+</mapper>

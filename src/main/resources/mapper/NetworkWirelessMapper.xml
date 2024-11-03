@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinamobile.demo.dao.NetworkWirelessMapper">
+  <resultMap id="BaseResultMap" type="com.chinamobile.demo.entity.NetworkWireless">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="grid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="wireless_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="wireless_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="wireless_full_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="floor" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="longitude" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="latitude" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="aoi_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, grid, wireless_id, wireless_name, wireless_full_name, floor, longitude, latitude, 
+    aoi_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_network_wireless
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_network_wireless
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinamobile.demo.entity.NetworkWireless">
+    insert into t_network_wireless (id, grid, wireless_id, 
+      wireless_name, wireless_full_name, floor, 
+      longitude, latitude, aoi_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{grid,jdbcType=VARCHAR}, #{wirelessId,jdbcType=VARCHAR}, 
+      #{wirelessName,jdbcType=VARCHAR}, #{wirelessFullName,jdbcType=VARCHAR}, #{floor,jdbcType=INTEGER}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{aoiId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinamobile.demo.entity.NetworkWireless">
+    insert into t_network_wireless
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="grid != null">
+        grid,
+      </if>
+      <if test="wirelessId != null">
+        wireless_id,
+      </if>
+      <if test="wirelessName != null">
+        wireless_name,
+      </if>
+      <if test="wirelessFullName != null">
+        wireless_full_name,
+      </if>
+      <if test="floor != null">
+        floor,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="aoiId != null">
+        aoi_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="grid != null">
+        #{grid,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessId != null">
+        #{wirelessId,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessName != null">
+        #{wirelessName,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessFullName != null">
+        #{wirelessFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="aoiId != null">
+        #{aoiId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinamobile.demo.entity.NetworkWireless">
+    update t_network_wireless
+    <set>
+      <if test="grid != null">
+        grid = #{grid,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessId != null">
+        wireless_id = #{wirelessId,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessName != null">
+        wireless_name = #{wirelessName,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessFullName != null">
+        wireless_full_name = #{wirelessFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="aoiId != null">
+        aoi_id = #{aoiId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinamobile.demo.entity.NetworkWireless">
+    update t_network_wireless
+    set grid = #{grid,jdbcType=VARCHAR},
+      wireless_id = #{wirelessId,jdbcType=VARCHAR},
+      wireless_name = #{wirelessName,jdbcType=VARCHAR},
+      wireless_full_name = #{wirelessFullName,jdbcType=VARCHAR},
+      floor = #{floor,jdbcType=INTEGER},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      aoi_id = #{aoiId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
